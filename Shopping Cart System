@@ -1,0 +1,54 @@
+cart = []
+items = {}
+categories = set()
+
+while True:
+    print("\n1. Add Item")
+    print("2. Remove Item")
+    print("3. View Cart")
+    print("4. Total Bill")
+    print("5. Exit")
+
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        name = input("Enter item name: ")
+        price = int(input("Enter price: "))
+        category = input("Enter category: ")
+
+        cart.append(name)
+        items[name] = price
+        categories.add(category)
+
+        print("Item added")
+
+    elif ch == 2:
+        name = input("Enter item to remove: ")
+
+        if name in cart:
+            cart.remove(name)
+            del items[name]
+            print("Item removed")
+        else:
+            print("Item not found")
+
+    elif ch == 3:
+        print("Cart items:")
+        for i in cart:
+            print(i, items[i])
+
+        print("Categories:", categories)
+
+    elif ch == 4:
+        total = 0
+
+        for i in cart:
+            total = total + items[i]
+
+        print("Total Bill =", total)
+
+    elif ch == 5:
+        break
+
+    else:
+        print("Wrong choice")
