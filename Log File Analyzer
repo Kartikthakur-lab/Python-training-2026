@@ -1,0 +1,56 @@
+import re
+
+def read_logs():
+    try:
+        f = open("server.log", "r")
+
+        for line in f:
+            yield line
+
+        f.close()
+
+    except FileNotFoundError:
+        print("Log file not found")
+
+
+def analyze():
+    errors = []
+    ips = []
+    times = []
+
+    for line in read_logs():
+
+        ip = re.findall(r"\b\d{1,3}(?:\.\d{1,3}){3}\b", line)
+        time = re.findall(r"\d{2}:\d{2}:\d{2}", line)
+        code = re.findall(r"ERROR\s(\d+)", line)
+
+        if ip:
+            ips.append(ip[0])
+
+        if time:
+            times.append(time[0])
+
+        if code:
+            errors.append(code[0])
+
+
+    f = open("report.txt", "w")
+
+    f.write("Error Codes:\n")
+    for i in errors:
+        f.write(i + "\n")
+
+    f.write("\nIP Addresses:\n")
+    for i in ips:
+        f.write(i + "\n")
+
+    f.write("\nTimestamps:\n")
+    for i in times:
+        f.write(i + "\n")
+
+    f.close()
+
+    print("Report saved")
+
+
+analyze()
