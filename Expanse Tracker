@@ -1,0 +1,63 @@
+file = "expense.txt"
+
+def add_expense():
+    try:
+        f = open(file, "a")
+
+        category = input("Enter category: ")
+        amount = int(input("Enter amount: "))
+
+        f.write(category + "," + str(amount) + "\n")
+        f.close()
+
+        print("Expense added")
+
+    except:
+        print("Invalid input")
+
+
+def show_expense():
+    try:
+        f = open(file, "r")
+
+        total = {}
+
+        for line in f:
+            data = line.split(",")
+            cat = data[0]
+            money = int(data[1])
+
+            if cat in total:
+                total[cat] = total[cat] + money
+            else:
+                total[cat] = money
+
+        f.close()
+
+        print("Expense Summary:")
+
+        for i in total:
+            print(i, ":", total[i])
+
+    except FileNotFoundError:
+        print("File not found")
+
+
+while True:
+    print("\n1. Add Expense")
+    print("2. View Summary")
+    print("3. Exit")
+
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        add_expense()
+
+    elif ch == 2:
+        show_expense()
+
+    elif ch == 3:
+        break
+
+    else:
+        print("Wrong choice")
