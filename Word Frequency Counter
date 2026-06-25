@@ -1,0 +1,23 @@
+text = input("Enter a passage: ")
+
+words = text.lower().split()
+
+count = {}
+
+for word in words:
+    if word in count:
+        count[word] = count[word] + 1
+    else:
+        count[word] = 1
+
+print("Word Frequency:")
+
+for word in count:
+    print(word, ":", count[word])
+
+result = sorted(count.items(), key=lambda x: x[1], reverse=True)
+
+print("\nTop 5 most frequent words:")
+
+for i in result[:5]:
+    print(i[0], ":", i[1])
