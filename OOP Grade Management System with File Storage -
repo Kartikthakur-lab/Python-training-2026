@@ -1,0 +1,60 @@
+class Student:
+    def __init__(self, name, marks):
+        self.name = name
+        self.marks = marks
+
+    def grade(self):
+        if self.marks >= 90:
+            return "A"
+        elif self.marks >= 75:
+            return "B"
+        elif self.marks >= 50:
+            return "C"
+        else:
+            return "F"
+
+    def __str__(self):
+        return self.name + " " + str(self.marks) + " " + self.grade()
+
+
+class Teacher:
+    def __init__(self, name):
+        self.name = name
+
+    def show(self):
+        return "Teacher: " + self.name
+
+
+class Course(Student):
+    def __init__(self, name, marks, course):
+        Student.__init__(self, name, marks)
+        self.course = course
+
+    def __str__(self):
+        return self.name + " " + self.course + " " + str(self.marks) + " " + self.grade()
+
+
+def save_data(obj):
+    f = open("student.txt", "a")
+    f.write(str(obj) + "\n")
+    f.close()
+
+
+def read_data():
+    f = open("student.txt", "r")
+
+    for i in f:
+        print(i)
+
+    f.close()
+
+
+s = Course("Rahul", 85, "Python")
+t = Teacher("Aman")
+
+print(t.show())
+
+save_data(s)
+
+print("Student Records:")
+read_data()
