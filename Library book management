@@ -1,0 +1,109 @@
+import csv
+
+file = "books.csv"
+
+def add_book():
+    try:
+        f = open(file, "a", newline="")
+        w = csv.writer(f)
+
+        name = input("Enter book name: ")
+        author = input("Enter author name: ")
+
+        w.writerow([name, author])
+        f.close()
+
+        print("Book added")
+
+    except:
+        print("Error")
+
+
+def show_books():
+    try:
+        f = open(file, "r")
+        r = csv.reader(f)
+
+        print("Books:")
+
+        for row in r:
+            print(row[0], "-", row[1])
+
+        f.close()
+
+    except FileNotFoundError:
+        print("File not found")
+
+
+def search_book():
+    try:
+        f = open(file, "r")
+        r = csv.reader(f)
+
+        name = input("Enter book name: ")
+
+        found = False
+
+        for row in r:
+            if row[0] == name:
+                print("Book found:", row)
+                found = True
+
+        if found == False:
+            print("Book not found")
+
+        f.close()
+
+    except FileNotFoundError:
+        print("File not found")
+
+
+def remove_book():
+    try:
+        f = open(file, "r")
+        r = list(csv.reader(f))
+        f.close()
+
+        name = input("Enter book name to remove: ")
+
+        f = open(file, "w", newline="")
+        w = csv.writer(f)
+
+        for row in r:
+            if row[0] != name:
+                w.writerow(row)
+
+        f.close()
+
+        print("Book removed")
+
+    except FileNotFoundError:
+        print("File not found")
+
+
+while True:
+    print("\n1.Add Book")
+    print("2.Show Books")
+    print("3.Search Book")
+    print("4.Remove Book")
+    print("5.Exit")
+
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        add_book()
+
+    elif ch == 2:
+        show_books()
+
+    elif ch == 3:
+        search_book()
+
+    elif ch == 4:
+        remove_book()
+
+    elif ch == 5:
+        break
+
+    else:
+        print("Wrong choice")
