@@ -1,0 +1,59 @@
+def log_salary(fun):
+    def check(*args):
+        print("Salary calculation done")
+        return fun(*args)
+    return check
+
+
+class Employee:
+    def __init__(self, name):
+        self.name = name
+
+    def calculate_salary(self):
+        pass
+
+
+class FullTimeEmployee(Employee):
+
+    def __init__(self, name, salary):
+        Employee.__init__(self, name)
+        self.salary = salary
+
+    @log_salary
+    def calculate_salary(self):
+        return self.salary
+
+
+class PartTimeEmployee(Employee):
+
+    def __init__(self, name, hours, rate):
+        Employee.__init__(self, name)
+        self.hours = hours
+        self.rate = rate
+
+    @log_salary
+    def calculate_salary(self):
+        return self.hours * self.rate
+
+
+def save_file(data):
+    f = open("salary.txt", "a")
+    f.write(data + "\n")
+    f.close()
+
+
+e1 = FullTimeEmployee("Rahul", 50000)
+e2 = PartTimeEmployee("Aman", 40, 500)
+
+
+s1 = "Name: " + e1.name + " Salary: " + str(e1.calculate_salary())
+s2 = "Name: " + e2.name + " Salary: " + str(e2.calculate_salary())
+
+
+print(s1)
+print(s2)
+
+save_file(s1)
+save_file(s2)
+
+print("Data saved")
